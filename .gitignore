@@ -1,0 +1,11 @@
+# 系统 / 编辑器产生的垃圾文件
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+desktop.ini
+.DS_Store
+__MACOSX/
+
+# 日志与临时文件
+*.log
+*.tmp
