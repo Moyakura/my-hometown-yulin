@@ -5,327 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>魅力玉林 · 山水玉林 岭南美玉 | 广西玉林文旅主题网站</title>
 <meta name="description" content="我的家乡——广西玉林。山水自然、人文古迹、特色美食、民俗非遗，一城岭南美玉，千年古州风华。">
-<style>
-/* ==========================================================================
-   魅力玉林 · 文旅主题网站
-   单文件自包含：HTML + 内联 CSS + 内联 JS，无任何外部框架依赖
-   目录约定：图片 images/子文件夹名/文件 ；视频 videos/子文件夹名/文件
-   注意：素材文件名含 # 与空格，已按 URL 规则转义为 %23 / %20
-   ========================================================================== */
-
-/* ---------- 1. 设计变量（青绿 + 米白，国风水墨意境） ---------- */
-:root{
-  --green:#2f6f4f;          /* 主色：青绿（山岫） */
-  --green-deep:#204b37;     /* 深青绿：覆盖层/页脚 */
-  --green-soft:#6d9b81;     /* 浅青绿：辅助色 */
-  --cream:#f7f3e8;          /* 米白：页面底色（宣纸） */
-  --paper:#fffdf6;          /* 卡片纸白 */
-  --ink:#2b2b26;            /* 墨色：正文 */
-  --muted:#6c6b5e;          /* 次要文字 */
-  --gold:#c0a062;           /* 点缀金 */
-  --line:rgba(47,111,79,.14);
-  --radius:16px;
-  --shadow-sm:0 6px 18px rgba(35,77,57,.07);
-  --shadow-lg:0 20px 46px rgba(35,77,57,.18);
-  --font-serif:"Songti SC","STSong","Noto Serif SC","Source Han Serif SC","SimSun",serif;
-  --font-sans:"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei","Noto Sans SC",system-ui,-apple-system,sans-serif;
-  --header-h:68px;
-}
-
-/* ---------- 2. 基础重置 ---------- */
-*,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--font-sans);font-size:16px;line-height:1.85;overflow-x:hidden}
-img,video{display:block;max-width:100%;height:auto}
-a{color:inherit;text-decoration:none}
-button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
-h1,h2,h3,h4{margin:0;font-weight:600}
-p{margin:0}
-ul{margin:0;padding:0;list-style:none}
-::selection{background:rgba(47,111,79,.22)}
-
-/* 宣纸质感底纹（纯 CSS） */
-body::before{
-  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.35;
-  background-image:radial-gradient(rgba(47,111,79,.10) 1px,transparent 1px);
-  background-size:24px 24px;
-}
-main,.topbar,.footer{position:relative;z-index:1}
-.wrap{max-width:1180px;margin:0 auto}
-
-/* ---------- 3. 顶栏 / 导航 ---------- */
-.topbar{
-  position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:100;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 clamp(14px,4vw,48px);
-  background:linear-gradient(180deg,rgba(247,243,232,.97),rgba(247,243,232,.86));
-  backdrop-filter:saturate(140%) blur(10px);
-  -webkit-backdrop-filter:saturate(140%) blur(10px);
-  border-bottom:1px solid var(--line);
-  transition:height .3s ease,box-shadow .3s ease;
-}
-.topbar.scrolled{height:58px;box-shadow:0 8px 26px rgba(35,77,57,.10)}
-
-.brand{display:flex;align-items:center;gap:10px}
-.seal{
-  width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;
-  background:var(--green);color:var(--cream);border-radius:8px;
-  font-family:var(--font-serif);font-size:22px;
-  box-shadow:0 4px 12px rgba(47,111,79,.35);
-}
-.brand-text{display:flex;flex-direction:column;line-height:1.2}
-.brand-text strong{font-family:var(--font-serif);font-size:20px;letter-spacing:.12em}
-.brand-text em{font-style:normal;font-size:10px;letter-spacing:.28em;color:var(--green-soft)}
-
-.nav{display:flex;align-items:center;gap:4px}
-.nav a{position:relative;padding:8px 13px;font-size:15px;letter-spacing:.06em;border-radius:999px;transition:color .25s ease,background .25s ease}
-.nav a::after{
-  content:"";position:absolute;left:50%;bottom:2px;width:0;height:2px;
-  background:var(--green);border-radius:2px;transform:translateX(-50%);transition:width .28s ease;
-}
-.nav a:hover{color:var(--green)}
-.nav a:hover::after{width:38%}
-.nav a.active{color:var(--cream);background:var(--green)}
-.nav a.active::after{width:0}
-
-.nav-toggle{
-  display:none;width:42px;height:42px;border-radius:10px;
-  flex-direction:column;align-items:center;justify-content:center;gap:5px;
-  border:1px solid var(--line);background:rgba(255,255,255,.5);
-}
-.nav-toggle span{display:block;width:20px;height:2px;background:var(--green);border-radius:2px;transition:transform .3s ease,opacity .2s ease}
-.nav-toggle.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.nav-toggle.is-open span:nth-child(2){opacity:0}
-.nav-toggle.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-
-/* ---------- 4. Hero 首屏 ---------- */
-.hero{
-  position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;
-  overflow:hidden;background:var(--green-deep);
-  padding:calc(var(--header-h) + 40px) 20px 96px;text-align:center;
-}
-@supports (height:100svh){.hero{min-height:100svh}}
-.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%;animation:heroZoom 20s ease-out forwards}
-@keyframes heroZoom{from{transform:scale(1.08)}to{transform:scale(1)}}
-.hero::after{
-  content:"";position:absolute;inset:0;
-  background:
-    radial-gradient(120% 80% at 50% 40%,rgba(10,26,18,.15),rgba(10,26,18,.62) 100%),
-    linear-gradient(180deg,rgba(15,34,24,.45) 0%,rgba(15,34,24,.20) 38%,rgba(12,30,21,.80) 100%);
-}
-.hero-inner{position:relative;z-index:2;color:var(--cream);max-width:900px}
-.hero-kicker{
-  display:inline-block;font-size:13px;letter-spacing:.42em;text-indent:.42em;
-  padding:6px 18px;margin-bottom:22px;border:1px solid rgba(247,243,232,.5);border-radius:999px;
-}
-.hero h1{font-family:var(--font-serif);font-weight:700;font-size:clamp(38px,7.4vw,86px);letter-spacing:.08em;line-height:1.2;text-shadow:0 6px 30px rgba(0,0,0,.45)}
-.hero-sub{margin:22px auto 0;max-width:620px;font-size:clamp(15px,2vw,19px);letter-spacing:.14em;color:rgba(247,243,232,.92)}
-.hero-line{width:120px;height:1px;margin:28px auto 0;background:linear-gradient(90deg,transparent,var(--cream),transparent)}
-.scroll-down{
-  position:absolute;left:50%;bottom:26px;z-index:3;transform:translateX(-50%);
-  width:44px;height:44px;display:grid;place-items:center;border-radius:50%;
-  border:1px solid rgba(247,243,232,.55);animation:floatY 2.2s ease-in-out infinite;
-}
-.scroll-down::after{content:"";width:10px;height:10px;margin-top:-4px;border-right:2px solid var(--cream);border-bottom:2px solid var(--cream);transform:rotate(45deg)}
-@keyframes floatY{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,9px)}}
-
-/* ---------- 5. 区块通用 ---------- */
-.section{padding:clamp(58px,8vw,112px) clamp(16px,5vw,56px);scroll-margin-top:var(--header-h);position:relative}
-.section.alt{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.section.alt::before{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:
-    radial-gradient(620px 320px at 88% 8%,rgba(47,111,79,.10),transparent 70%),
-    radial-gradient(520px 280px at 6% 92%,rgba(47,111,79,.08),transparent 70%);
-}
-.section > .wrap{position:relative;z-index:1}
-.sec-head{text-align:center;margin-bottom:clamp(30px,4.4vw,56px)}
-.sec-kicker{font-size:12px;letter-spacing:.4em;text-indent:.4em;color:var(--green-soft)}
-.sec-title{font-family:var(--font-serif);font-size:clamp(26px,4vw,40px);letter-spacing:.1em;margin:.35em 0 .5em}
-.sec-title b{color:var(--green);font-weight:700}
-.sec-divider{display:flex;align-items:center;justify-content:center;gap:10px;margin:14px 0 16px}
-.sec-divider i{display:block;width:56px;height:1px;background:linear-gradient(90deg,transparent,var(--green))}
-.sec-divider i:last-child{background:linear-gradient(90deg,var(--green),transparent)}
-.sec-divider span{width:7px;height:7px;background:var(--gold);transform:rotate(45deg)}
-.sec-desc{max-width:680px;margin:0 auto;color:var(--muted);font-size:15px}
-
-/* ---------- 6. 通用卡片（图片为主 + 精炼文字） ---------- */
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,2.4vw,30px)}
-.grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}
-@media(min-width:1100px){.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media(max-width:860px){.grid,.grid-4{grid-template-columns:1fr}}
-
-.card{
-  background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
-  overflow:hidden;box-shadow:var(--shadow-sm);
-  transition:transform .4s cubic-bezier(.22,.61,.36,1),box-shadow .4s ease;
-}
-.card:hover{transform:translateY(-10px);box-shadow:var(--shadow-lg)}
-.card-media{position:relative;aspect-ratio:4/3;overflow:hidden;background:#eae4d4;cursor:zoom-in}
-.card-media img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.22,.61,.36,1)}
-.card:hover .card-media img{transform:scale(1.08)}
-.zoom-tip{
-  position:absolute;right:12px;bottom:12px;z-index:2;
-  padding:5px 12px;border-radius:999px;font-size:12px;letter-spacing:.1em;
-  color:var(--cream);background:rgba(32,75,55,.72);backdrop-filter:blur(4px);
-  opacity:0;transform:translateY(8px);transition:opacity .3s ease,transform .3s ease;
-}
-.card:hover .zoom-tip{opacity:1;transform:none}
-.card-body{padding:clamp(18px,2.2vw,26px)}
-.card-title{display:flex;align-items:baseline;gap:10px;font-family:var(--font-serif);font-size:clamp(20px,2.4vw,25px);letter-spacing:.08em;margin-bottom:10px}
-.card-title::before{content:"";width:3px;height:19px;background:var(--green);border-radius:2px;flex:0 0 3px}
-.card-title small{font-family:var(--font-sans);font-size:11px;letter-spacing:.24em;color:var(--green-soft)}
-.card-text{color:#4a4a42;font-size:15px;line-height:1.9}
-.card-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-top:16px;padding-top:13px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--muted)}
-.tags{display:flex;gap:6px;flex-wrap:wrap}
-.tags span{padding:3px 10px;border:1px solid var(--line);border-radius:999px;color:var(--green)}
-.src-link{color:var(--green);border-bottom:1px solid transparent;transition:border-color .25s ease}
-.src-link:hover{border-bottom-color:var(--green)}
-
-/* ---------- 7. 视频展映 ---------- */
-.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:clamp(18px,2.2vw,26px)}
-.video-card{
-  margin:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
-  overflow:hidden;box-shadow:var(--shadow-sm);
-  transition:transform .4s cubic-bezier(.22,.61,.36,1),box-shadow .4s ease;
-}
-.video-card:hover{transform:translateY(-10px);box-shadow:var(--shadow-lg)}
-.video-wrap{position:relative;aspect-ratio:16/9;background:#101a15;overflow:hidden}
-.video-wrap video{width:100%;height:100%;object-fit:cover;background:#101a15}
-.play-btn{
-  position:absolute;inset:0;z-index:2;display:grid;place-items:center;
-  background:linear-gradient(180deg,rgba(16,26,21,.15),rgba(16,26,21,.55));
-  transition:opacity .35s ease,visibility .35s ease;
-}
-.play-btn span{
-  width:62px;height:62px;display:grid;place-items:center;border-radius:50%;
-  background:rgba(247,243,232,.92);color:var(--green);font-size:20px;
-  box-shadow:0 10px 26px rgba(0,0,0,.35);transition:transform .3s ease;
-}
-.play-btn::after{content:"点击播放";position:absolute;bottom:16px;left:0;right:0;text-align:center;color:var(--cream);font-size:12px;letter-spacing:.24em}
-.play-btn:hover span{transform:scale(1.08)}
-.video-wrap.playing .play-btn{opacity:0;visibility:hidden;pointer-events:none}
-/* 视频全屏按钮 */
-.fs-btn{
-  position:absolute;top:10px;right:10px;z-index:3;
-  padding:6px 11px;border-radius:8px;font-size:12px;letter-spacing:.12em;
-  color:var(--cream);background:rgba(32,75,55,.72);border:1px solid rgba(247,243,232,.3);
-  backdrop-filter:blur(4px);opacity:0;transition:opacity .3s ease,background .25s ease;
-}
-.video-card:hover .fs-btn,.video-wrap.playing .fs-btn{opacity:1}
-.fs-btn:hover{background:rgba(32,75,55,.95)}
-/* 影院模式：原生全屏被限制时的兜底（例如 IDE 内置预览的 iframe 无全屏权限） */
-.video-wrap.cinema{position:fixed;inset:0;z-index:280;width:100vw;height:100vh;aspect-ratio:auto;border-radius:0;background:#000}
-.video-wrap.cinema video{object-fit:contain;width:100%;height:100%}
-.video-wrap.cinema .play-btn{opacity:0;visibility:hidden;pointer-events:none}
-.cinema-close{display:none}
-.video-wrap.cinema .cinema-close{
-  display:grid;place-items:center;position:absolute;top:18px;left:18px;z-index:4;
-  width:44px;height:44px;border-radius:50%;font-size:18px;color:var(--cream);
-  background:rgba(247,243,232,.16);border:1px solid rgba(247,243,232,.35);
-}
-.cinema-close:hover{background:rgba(247,243,232,.32)}
-body.cinema-open{overflow:hidden}
-.video-body{padding:16px 18px 18px}
-.video-body h3{font-family:var(--font-serif);font-size:19px;letter-spacing:.06em}
-.video-body p{margin-top:6px;color:var(--muted);font-size:13.5px;line-height:1.75}
-.video-body .src-link{display:inline-block;margin-top:10px;font-size:12.5px}
-
-/* ---------- 8. 关于玉林 ---------- */
-.about-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,52px);align-items:start}
-@media(max-width:900px){.about-layout{grid-template-columns:1fr}}
-.about-text p{color:#45443c;margin-bottom:16px}
-.about-text p:first-of-type::first-letter{font-family:var(--font-serif);font-size:2.6em;line-height:1;float:left;margin:6px 10px 0 0;color:var(--green)}
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-@media(max-width:420px){.stats{grid-template-columns:1fr}}
-.stat{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px 18px;box-shadow:var(--shadow-sm);transition:transform .3s ease,box-shadow .3s ease}
-.stat:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
-.stat b{display:block;font-family:var(--font-serif);font-size:clamp(28px,3.6vw,38px);color:var(--green);line-height:1.2}
-.stat b i{font-style:normal;font-size:.45em;letter-spacing:.06em;margin-left:4px}
-.stat strong{display:block;margin-top:4px;font-size:15px;letter-spacing:.08em}
-.stat em{display:block;font-style:normal;margin-top:4px;font-size:12px;color:var(--muted);line-height:1.6}
-
-.sources{margin-top:34px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 20px;font-size:14px}
-.sources summary{cursor:pointer;color:var(--green);letter-spacing:.08em;font-weight:600}
-.sources ul{margin:14px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px 22px}
-.sources li{color:var(--muted);font-size:13px;line-height:1.9}
-.sources a{color:var(--green);border-bottom:1px solid rgba(47,111,79,.35);word-break:break-all}
-.sources .note{margin-top:14px;color:var(--muted);font-size:13px}
-
-/* ---------- 9. 页脚 ---------- */
-.footer{background:var(--green-deep);color:rgba(247,243,232,.86);padding:44px clamp(16px,5vw,56px) 34px}
-.footer .wrap{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center}
-.footer .f-brand{font-family:var(--font-serif);font-size:19px;letter-spacing:.16em;color:var(--cream)}
-.footer small{display:block;font-size:12.5px;letter-spacing:.06em;color:rgba(247,243,232,.6)}
-.footer-links{display:flex;flex-wrap:wrap;gap:14px;font-size:13px}
-.footer-links a:hover{color:var(--cream);text-decoration:underline}
-
-/* ---------- 10. 滚动渐现 ---------- */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .75s ease,transform .75s cubic-bezier(.22,.61,.36,1)}
-.reveal.in{opacity:1;transform:none}
-
-/* ---------- 11. 灯箱 ---------- */
-.lightbox{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:clamp(12px,4vw,40px);background:rgba(14,24,18,.93);backdrop-filter:blur(6px)}
-.lightbox.open{display:flex}
-.lb-figure{display:flex;flex-direction:column;align-items:center;gap:14px;max-width:100%;margin:0}
-.lb-img{max-width:92vw;max-height:78vh;object-fit:contain;border-radius:8px;box-shadow:0 24px 70px rgba(0,0,0,.55);animation:lbIn .32s ease}
-@keyframes lbIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
-.lb-cap{color:rgba(247,243,232,.92);text-align:center;max-width:760px}
-.lb-cap h4{font-family:var(--font-serif);font-size:19px;letter-spacing:.1em}
-.lb-cap p{font-size:13.5px;color:rgba(247,243,232,.66);margin-top:4px}
-.lb-count{margin-top:2px;font-size:12px;letter-spacing:.2em;color:var(--green-soft)}
-.lb-btn{
-  position:absolute;z-index:2;width:46px;height:46px;border-radius:50%;
-  display:grid;place-items:center;font-size:20px;
-  background:rgba(247,243,232,.16);color:var(--cream);border:1px solid rgba(247,243,232,.35);
-  transition:background .25s ease,transform .25s ease;
-}
-.lb-btn:hover{background:rgba(247,243,232,.32);transform:scale(1.06)}
-.lb-close{top:18px;right:18px}
-.lb-prev{left:18px;top:50%;transform:translateY(-50%)}
-.lb-next{right:18px;top:50%;transform:translateY(-50%)}
-@media(max-width:700px){.lb-prev{left:10px}.lb-next{right:10px}.lb-img{max-height:66vh}}
-
-/* ---------- 12. 返回顶部 ---------- */
-.to-top{
-  position:fixed;right:22px;bottom:26px;z-index:90;
-  width:50px;height:50px;border-radius:50%;display:grid;place-items:center;
-  background:var(--green);color:var(--cream);box-shadow:0 12px 28px rgba(35,77,57,.32);
-  opacity:0;visibility:hidden;transform:translateY(14px);
-  transition:opacity .35s ease,transform .35s ease,visibility .35s ease,background .25s ease;
-}
-.to-top.show{opacity:1;visibility:visible;transform:none}
-.to-top:hover{background:var(--green-deep)}
-.to-top::before{content:"";width:10px;height:10px;margin-bottom:-6px;border-left:2px solid var(--cream);border-top:2px solid var(--cream);transform:rotate(45deg)}
-
-/* ---------- 13. 移动端：导航折叠为汉堡菜单 ---------- */
-@media(max-width:900px){
-  .nav{
-    position:fixed;top:var(--header-h);left:0;right:0;flex-direction:column;align-items:stretch;gap:0;
-    padding:6px 22px 18px;background:var(--paper);
-    border-bottom:1px solid var(--line);box-shadow:0 20px 40px rgba(35,77,57,.16);
-    transform:translateY(-14px);opacity:0;visibility:hidden;transition:opacity .28s ease,transform .28s ease,visibility .28s ease;
-  }
-  .nav.open{transform:none;opacity:1;visibility:visible}
-  .nav a{padding:14px 2px;border-bottom:1px dashed var(--line);border-radius:0;font-size:16px}
-  .nav a:last-child{border-bottom:0}
-  .nav a.active{background:transparent;color:var(--green);font-weight:600}
-  .nav a.active::after{width:38%}
-  .nav-toggle{display:flex}
-}
-/* 无障碍：尊重系统降低动效偏好 */
-@media(prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-  .reveal{opacity:1;transform:none}
-}
-</style>
+<link rel="stylesheet" href="assets/css/style.css">
+<!-- 首屏大图预加载：缩短 LCP -->
+<link rel="preload" as="image" href="images/大容山/image_夏天不去一趟大容山怎么行🤔。大..._4.jpg">
 </head>
-<body>
+<body class="page-home">
 
-<!-- ============================== 顶栏 ============================== -->
+<!-- ==================== 顶栏 ==================== -->
 <header class="topbar" id="topbar">
-  <a class="brand" href="#home" aria-label="魅力玉林 首页">
+  <a class="brand" href="index.html" aria-label="魅力玉林 首页">
     <span class="seal" aria-hidden="true">玉</span>
     <span class="brand-text"><strong>魅力玉林</strong><em>YULIN · GUANGXI</em></span>
   </a>
@@ -333,991 +21,262 @@ body.cinema-open{overflow:hidden}
     <span></span><span></span><span></span>
   </button>
   <nav class="nav" id="nav">
-    <a href="#nature">山水自然</a>
-    <a href="#culture">人文古迹</a>
-    <a href="#food">特色美食</a>
-    <a href="#folk">民俗非遗</a>
-    <a href="#about">关于玉林</a>
+    <a class="active" href="index.html">首页</a>
+    <a href="nature.html">山水自然</a>
+    <a href="culture.html">人文古迹</a>
+    <a href="food.html">特色美食</a>
+    <a href="folk.html">民俗非遗</a>
+    <a href="about.html">关于玉林</a>
   </nav>
 </header>
 
 <main>
 
-  <!-- ============================== Hero 首屏（大容山） ============================== -->
+  <!-- ==================== Hero ==================== -->
   <section class="hero" id="home">
     <img class="hero-img"
-         src="images/大容山/image_夏天不去一趟大容山怎么行🤔。大..._5.jpg"
-         alt="玉林大容山的层峦云海与风车" fetchpriority="high">
+         src="images/大容山/image_夏天不去一趟大容山怎么行🤔。大..._4.jpg"
+         alt="玉林大容山的层峦云海与风车" width="1400" height="815" fetchpriority="high" decoding="async">
     <div class="hero-inner">
       <p class="hero-kicker">广 西 · 玉 林</p>
       <h1>山水玉林 · 岭南美玉</h1>
       <p class="hero-sub">一城岭南美玉，千年古州风华。<br>山环水抱之间，藏着最抚凡人心的烟火味道。</p>
       <div class="hero-line" aria-hidden="true"></div>
+      <div class="hero-actions">
+        <a class="btn btn-solid" href="nature.html">走进山水 <span aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost-light" href="about.html">了解这座城</a>
+      </div>
     </div>
-    <a class="scroll-down" href="#nature" aria-label="向下滚动，进入山水自然"></a>
+    <a class="scroll-down" href="#start" aria-label="向下滚动"></a>
   </section>
 
-  <!-- ============================== 一、山水自然 ============================== -->
-  <section class="section" id="nature">
+  <!-- ==================== 导语 + 概览数据 ==================== -->
+  <section class="section" id="start">
     <div class="wrap">
       <div class="sec-head reveal">
-        <p class="sec-kicker">NATURE · 山水自然</p>
-        <h2 class="sec-title">山环水抱，<b>造化钟灵</b></h2>
+        <p class="sec-kicker">Welcome · 前言</p>
+        <h2 class="sec-title">一半是山水，<b>一半是烟火</b></h2>
         <div class="sec-divider" aria-hidden="true"><i></i><span></span><i></i></div>
-        <p class="sec-desc">大容山的林海、都峤山的丹霞、田园的稻浪、城中宫阙的飞檐——玉林的山水平畴，一步一景。</p>
       </div>
 
-      <div class="grid">
-        <!-- 大容山 -->
-        <article class="card reveal"
-                 data-title="大容山国家森林公园"
-                 data-desc="桂东南第一高峰，主峰梅花顶海拔约1275米。原始次生林、高山草甸、飞瀑溪流与风车阵同框，夏日清凉宜人，是露营观星的天然氧吧。"
-                 data-images="images/大容山/image_夏天不去一趟大容山怎么行🤔。大..._4.jpg|images/大容山/image_夏天不去一趟大容山怎么行🤔。大..._5.jpg|images/大容山/image_夏天不去一趟大容山怎么行🤔。大..._1.jpg">
-          <div class="card-media">
-            <img src="images/大容山/image_夏天不去一趟大容山怎么行🤔。大..._4.jpg" alt="大容山高山草甸与风车云海" loading="lazy" decoding="async">
-            <span class="zoom-tip">点击看大图</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">大容山 <small>DARONGSHAN</small></h3>
-            <p class="card-text">主峰梅花顶海拔逾千米，林海、草甸与风车云海连绵不绝，是桂东南最负盛名的避暑露营地。</p>
-            <div class="card-foot">
-              <div class="tags"><span>森林公园</span><span>避暑露营</span></div>
-              <a class="src-link" href="https://v.douyin.com/3YPUq7xlpsA/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-            </div>
-          </div>
-        </article>
+      <div class="wrap-narrow">
+        <p class="lead reveal">
+          玉林地处广西东南部，古称郁林，自西汉元鼎六年（公元前 111 年）置郁林郡，至今已有两千一百余年州郡史。
+          大容山的林海、都峤山的丹霞、真武阁的奇构、街头的一碗牛腩粉——
+          这片土地把风景与日子揉在一起，慢慢长出属于自己的味道。
+        </p>
+        <p class="lead reveal" style="margin-top:16px">
+          这座站点按主题分了五个章节：<a class="src-link" href="nature.html">山水自然</a>、
+          <a class="src-link" href="culture.html">人文古迹</a>、
+          <a class="src-link" href="food.html">特色美食</a>、
+          <a class="src-link" href="folk.html">民俗非遗</a>、
+          <a class="src-link" href="about.html">关于玉林</a>，
+          每个章节图文与影像分开放置，翻页更轻、加载更快。
+        </p>
+      </div>
 
-        <!-- 都峤山 -->
-        <article class="card reveal"
-                 data-title="都峤山"
-                 data-desc="中国道教三十六洞天之一，典型丹霞地貌。赤壁丹崖间藏有数百座岩洞，历代摩崖石刻遍布山壁，佛、道、儒三教遗迹共处一山。"
-                 data-images="images/都峤山/image_藏在广西的“人间仙境”！丹霞赤壁..._12.jpg|images/都峤山/image_藏在广西的“人间仙境”！丹霞赤壁..._14.jpg">
-          <div class="card-media">
-            <img src="images/都峤山/image_藏在广西的“人间仙境”！丹霞赤壁..._12.jpg" alt="都峤山丹霞赤壁与云海" loading="lazy" decoding="async">
-            <span class="zoom-tip">点击看大图</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">都峤山 <small>DUQIAOSHAN</small></h3>
-            <p class="card-text">丹霞赤壁如燃，云雾绕崖而行。山中数百岩洞与历代摩崖石刻，被称为藏在岭南的“人间仙境”。</p>
-            <div class="card-foot">
-              <div class="tags"><span>丹霞地貌</span><span>洞天石刻</span></div>
-              <a class="src-link" href="https://v.douyin.com/fMrpQuWSE94/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- 五彩田园 -->
-        <article class="card reveal"
-                 data-title="五彩田园"
-                 data-desc="集现代农业示范、休闲观光与乡村体验于一体的田园综合体。水街、花海、稻田景观相映成趣，是玉林人周末度假的后花园。"
-                 data-images="images/五彩田园/image_玉林五彩田园，好一派田园风光，绿..._6.jpg|images/五彩田园/image_水街黄昏。玉林五彩田园风景区——..._0.jpg|images/五彩田园/image_玉林五彩田园，好一派田园风光，绿..._0.jpg|images/五彩田园/image_玉林五彩田园，好一派田园风光，绿..._4.jpg">
-          <div class="card-media">
-            <img src="images/五彩田园/image_玉林五彩田园，好一派田园风光，绿..._6.jpg" alt="五彩田园的连片田园风光" loading="lazy" decoding="async">
-            <span class="zoom-tip">点击看大图</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">五彩田园 <small>WUCAI TIANYUAN</small></h3>
-            <p class="card-text">稻田成画、花海绵延，水街在黄昏里亮起灯笼。现代农业与乡村风景在此交汇，四时有不同的颜色。</p>
-            <div class="card-foot">
-              <div class="tags"><span>田园风光</span><span>休闲农业</span></div>
-              <a class="src-link" href="https://v.douyin.com/7SADv9L0hDQ/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- 云天文化城 -->
-        <article class="card reveal"
-                 data-title="云天文化城（云天宫）"
-                 data-desc="仿古宫殿式建筑群，集木雕、石雕、铜雕与巨幅壁画之大成。楼阁巍峨、金碧交辉，是玉林最具辨识度的城市文化地标。"
-                 data-images="images/云天文化城/image_【云天宫】不知天上宫阙，今夕是何..._3.jpg|images/云天文化城/image_【云天宫】不知天上宫阙，今夕是何..._2.jpg">
-          <div class="card-media">
-            <img src="images/云天文化城/image_【云天宫】不知天上宫阙，今夕是何..._3.jpg" alt="云天文化城宫殿式建筑全景" loading="lazy" decoding="async">
-            <span class="zoom-tip">点击看大图</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">云天文化城 <small>YUNTIAN PALACE</small></h3>
-            <p class="card-text">不知天上宫阙，今夕是何年。重檐层叠而上，木石铜雕极尽工巧，一座城写尽岭南匠人的心事。</p>
-            <div class="card-foot">
-              <div class="tags"><span>地标建筑</span><span>雕刻艺术</span></div>
-              <a class="src-link" href="https://v.douyin.com/Hn6-Z_jtMvI/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-            </div>
-          </div>
-        </article>
+      <div class="stats reveal" style="margin-top:clamp(28px,4vw,44px)">
+        <div class="stat"><b>2100<i>+ 年</i></b><strong>州郡建置历史</strong><em>西汉元鼎六年置郁林郡</em></div>
+        <div class="stat"><b>580.42<i>万人</i></b><strong>常住人口</strong><em>2024 年末数据</em></div>
+        <div class="stat"><b>44<i>家</i></b><strong>国家 A 级旅游景区</strong><em>其中 4A 级景区 16 家</em></div>
+        <div class="stat"><b>220<i>万+</i></b><strong>海外华侨及港澳台同胞</strong><em>广西第一侨乡</em></div>
       </div>
     </div>
   </section>
 
-  <!-- ============================== 二、人文古迹 ============================== -->
-  <section class="section alt" id="culture">
+  <!-- ==================== 四大板块入口 ==================== -->
+  <section class="section section-alt">
     <div class="wrap">
       <div class="sec-head reveal">
-        <p class="sec-kicker">HERITAGE · 人文古迹</p>
-        <h2 class="sec-title">千年古州，<b>匠心独运</b></h2>
+        <p class="sec-kicker">Chapters · 章节导览</p>
+        <h2 class="sec-title">翻开玉林的<b>四种模样</b></h2>
         <div class="sec-divider" aria-hidden="true"><i></i><span></span><i></i></div>
-        <p class="sec-desc">一座不用铁钉的木构奇楼，一座唐风重檐的古城，一座聚族而居的客家围堡——木石之间皆是岁月。</p>
+        <p class="sec-desc">山水、古迹、味道、乡音。点开任意一张，进入对应章节。</p>
       </div>
 
-      <div class="grid">
-        <!-- 真武阁 -->
-        <article class="card reveal"
-                 data-title="容县经略台真武阁"
-                 data-desc="建于明万历元年（1573年），三层纯木杠杆结构，全阁不用一颗铁钉。二楼四根金柱悬空不落地，历经数百年地震台风岿然不倒，被誉为“天南杰构”。"
-                 data-images="images/真武阁/image_玉林容县真武阁%20四柱悬空%20千载独..._13.jpg|images/真武阁/image_玉林容县真武阁%20四柱悬空%20千载独..._9.jpg|images/真武阁/image_玉林容县真武阁%20四柱悬空%20千载独..._0.jpg">
-          <div class="card-media">
-            <img src="images/真武阁/image_玉林容县真武阁%20四柱悬空%20千载独..._13.jpg" alt="容县真武阁三层木构楼阁" loading="lazy" decoding="async">
-            <span class="zoom-tip">点击看大图</span>
+      <div class="theme-grid">
+        <a class="theme-card reveal" href="nature.html">
+          <div class="theme-card-media">
+            <span class="tagline">NATURE</span>
+            <img src="images/都峤山/image_藏在广西的“人间仙境”！丹霞赤壁..._12.jpg"
+                 alt="都峤山丹霞赤壁与云海" width="1400" height="933" loading="lazy" decoding="async">
           </div>
-          <div class="card-body">
-            <h3 class="card-title">真武阁 <small>ZHENWU PAVILION</small></h3>
-            <p class="card-text">四柱悬空，千载独步。全木三层杠杆结构不用一钉，四百余年风雨地震而不倾，是古建史上的奇构。</p>
-            <div class="card-foot">
-              <div class="tags"><span>明代木构</span><span>天南杰构</span></div>
-              <a class="src-link" href="https://v.douyin.com/7GkKJ3GbTnc/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
+          <div class="theme-card-body">
+            <div>
+              <h3>山水自然</h3>
+              <small>NATURE · DARONGSHAN · DUQIAOSHAN</small>
             </div>
+            <p>大容山的草甸风车、都峤山的丹霞赤壁、五彩田园的稻浪水街，一步一景。</p>
+            <div class="theme-card-more"><span>进入章节</span><span aria-hidden="true">→</span></div>
           </div>
-        </article>
+        </a>
 
-        <!-- 容州古城 -->
-        <article class="card reveal"
-                 data-title="容州古城"
-                 data-desc="唐代容州治所所在，民间亦传为杨贵妃故里。经略台、真武阁、开元寺与仿唐街坊连成一片，入夜灯笼次第亮起，唐风古韵扑面而来。"
-                 data-images="images/容州古城/image_广西名胜玉林容州古城。%23我的抖音..._5.jpg|images/容州古城/image_广西名胜玉林容州古城。%23我的抖音..._1.jpg|images/容州古城/image_广西名胜玉林容州古城。%23我的抖音..._13.jpg">
-          <div class="card-media">
-            <img src="images/容州古城/image_广西名胜玉林容州古城。%23我的抖音..._5.jpg" alt="容州古城仿唐建筑夜景" loading="lazy" decoding="async">
-            <span class="zoom-tip">点击看大图</span>
+        <a class="theme-card reveal" href="culture.html">
+          <div class="theme-card-media">
+            <span class="tagline">HERITAGE</span>
+            <img src="images/客家围屋/image_珠砂垌客家围屋。位于玉林市郊，典..._4.jpg"
+                 alt="玉林市郊客家围屋全貌" width="1400" height="981" loading="lazy" decoding="async">
           </div>
-          <div class="card-body">
-            <h3 class="card-title">容州古城 <small>RONGZHOU ANCIENT CITY</small></h3>
-            <p class="card-text">唐时容州治所，民间传为贵妃故里。城墙、古阁、寺塔与街坊相连，夜色灯笼下恍若回到盛唐。</p>
-            <div class="card-foot">
-              <div class="tags"><span>唐风古城</span><span>历史街区</span></div>
-              <a class="src-link" href="https://v.douyin.com/Sz82HFeQaGE/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
+          <div class="theme-card-body">
+            <div>
+              <h3>人文古迹</h3>
+              <small>HERITAGE · PAVILION · ANCIENT CITY</small>
             </div>
+            <p>不用一根铁钉的真武阁、唐风夜色的容州古城、聚族而居的客家围屋。</p>
+            <div class="theme-card-more"><span>进入章节</span><span aria-hidden="true">→</span></div>
           </div>
-        </article>
+        </a>
 
-        <!-- 客家围屋 -->
-        <article class="card reveal"
-                 data-title="玉林客家围屋"
-                 data-desc="位于玉林市郊的客家围堡式民居，前有半月形池塘，四周高墙碉楼环护，中轴祠堂层层递进，是客家人聚族而居、守望相助的建筑标本。"
-                 data-images="images/客家围屋/image_珠砂垌客家围屋。位于玉林市郊，典..._4.jpg|images/客家围屋/image_珠砂垌客家围屋。位于玉林市郊，典..._1.jpg|images/客家围屋/image_珠砂垌客家围屋。位于玉林市郊，典..._0.jpg">
-          <div class="card-media">
-            <img src="images/客家围屋/image_珠砂垌客家围屋。位于玉林市郊，典..._4.jpg" alt="玉林市郊客家围屋全貌" loading="lazy" decoding="async">
-            <span class="zoom-tip">点击看大图</span>
+        <a class="theme-card reveal" href="food.html">
+          <div class="theme-card-media">
+            <span class="tagline">CUISINE</span>
+            <img src="images/福绵鸭/image_打卡开了30年的老字号福绵鸭餐馆..._1.jpg"
+                 alt="白切福绵鸭与蘸料" width="1400" height="1050" loading="lazy" decoding="async">
           </div>
-          <div class="card-body">
-            <h3 class="card-title">客家围屋 <small>HAKKA WALLED VILLAGE</small></h3>
-            <p class="card-text">半月池塘映着高墙碉楼，祠堂在中轴上层层递进。一座围屋，便是一部客家人迁徙与守望的家族史。</p>
-            <div class="card-foot">
-              <div class="tags"><span>客家民居</span><span>防御聚落</span></div>
-              <a class="src-link" href="https://v.douyin.com/CV21WQJUL6o/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
+          <div class="theme-card-body">
+            <div>
+              <h3>特色美食</h3>
+              <small>CUISINE · BEEF DRY · DUCK</small>
             </div>
+            <p>清晨一碗牛腩粉，年节一碟牛巴、一只白切鸭，味道都在市井摊头。</p>
+            <div class="theme-card-more"><span>进入章节</span><span aria-hidden="true">→</span></div>
           </div>
-        </article>
+        </a>
+
+        <a class="theme-card reveal" href="folk.html">
+          <div class="theme-card-media">
+            <span class="tagline">FOLK ART</span>
+            <img src="images/客家山歌/69fdc3453faebab698a63302fda52bb7.jpg"
+                 alt="客家山歌对唱场景" width="1400" height="840" loading="lazy" decoding="async">
+          </div>
+          <div class="theme-card-body">
+            <div>
+              <h3>民俗非遗</h3>
+              <small>FOLK · BAYIN · OPERA · PUPPET</small>
+            </div>
+            <p>唢呐一响八音穿云，茶山起调采茶入戏，十指提线便是一台木偶戏。</p>
+            <div class="theme-card-more"><span>进入章节</span><span aria-hidden="true">→</span></div>
+          </div>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- ============================== 三、特色美食 ============================== -->
-  <section class="section" id="food">
+  <!-- ==================== 影像速览（仅封面，不加载视频） ==================== -->
+  <section class="section">
     <div class="wrap">
       <div class="sec-head reveal">
-        <p class="sec-kicker">CUISINE · 特色美食</p>
-        <h2 class="sec-title">一城烟火，<b>风味岭南</b></h2>
+        <p class="sec-kicker">Video · 影像速览</p>
+        <h2 class="sec-title">会动的玉林，<b>在章节里等你</b></h2>
         <div class="sec-divider" aria-hidden="true"><i></i><span></span><i></i></div>
-        <p class="sec-desc">清晨一碗牛腩粉，午后一片白散，年节一碟牛巴一只鸭。玉林的味道，藏在市井摊头与家的灶台上。</p>
+        <p class="sec-desc">15 段影像分布在各章节，这里只放封面，点开才加载视频。</p>
       </div>
 
-      <div class="grid grid-4">
-        <!-- 玉林牛巴 -->
-        <article class="card reveal"
-                 data-title="玉林牛巴"
-                 data-desc="取黄牛后腿精肉切片，经腌、晾、炸、焖多道工序精制。色泽油亮，咸甜适口、甘韧耐嚼，是玉林最具代表性的风味伴手礼。"
-                 data-images="images/玉林牛巴/image_玉林牛巴%20广西特产零食。吃过很多..._2.jpg|images/玉林牛巴/image_玉林牛巴%20广西特产零食。吃过很多..._1.jpg|images/玉林牛巴/image_玉林牛巴%20广西特产零食。吃过很多..._0.jpg">
-          <div class="card-media">
-            <img src="images/玉林牛巴/image_玉林牛巴%20广西特产零食。吃过很多..._2.jpg" alt="油亮甘香的玉林牛巴" loading="lazy" decoding="async">
-            <span class="zoom-tip">点击看大图</span>
+      <div class="theme-grid">
+        <a class="theme-card reveal" href="nature.html#video">
+          <div class="theme-card-media">
+            <span class="tagline">VIDEO</span>
+            <img src="assets/img/posters/大容山/poster.jpg" alt="大容山露营视频封面" width="960" height="540" loading="lazy" decoding="async">
           </div>
-          <div class="card-body">
-            <h3 class="card-title">玉林牛巴 <small>BEEF DRY</small></h3>
-            <p class="card-text">腌晾炸焖反复入味，咸甜交织、越嚼越香，是离乡行囊里最常被想起的一味。</p>
-            <div class="card-foot">
-              <div class="tags"><span>风味卤味</span><span>伴手礼</span></div>
-              <a class="src-link" href="https://v.douyin.com/6QT5-VgBDtg/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
+          <div class="theme-card-body">
+            <div>
+              <h3>云端草甸 · 露营大容山</h3>
+              <small>NATURE</small>
             </div>
-          </div>
-        </article>
-
-        <!-- 玉林白散 -->
-        <article class="card reveal"
-                 data-title="玉林白散（白糤 · 米花）"
-                 data-desc="糯米蒸熟后压模成形、晾晒再油炸，圆如满月、洁白蓬松。它是玉林人过年祭祖待客的必备之物，也是一代代人共同的年味记忆。"
-                 data-images="images/玉林白散/image_广西玉林土特产~白散（米花）广西..._1.jpg|images/玉林白散/image_广西玉林土特产~白散（米花）广西..._5.jpg|images/玉林白散/image_广西玉林土特产~白散（米花）广西..._6.jpg">
-          <div class="card-media">
-            <img src="images/玉林白散/image_广西玉林土特产~白散（米花）广西..._1.jpg" alt="油炸起泡的玉林白散（米花）" loading="lazy" decoding="async">
-            <span class="zoom-tip">点击看大图</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">玉林白散 <small>RICE CRACKER</small></h3>
-            <p class="card-text">糯米压模晒足日光，入油锅一瞬开花。酥脆一声，是玉林人过年特有的“符号”。</p>
-            <div class="card-foot">
-              <div class="tags"><span>年味小吃</span><span>传统手艺</span></div>
-              <a class="src-link" href="https://v.douyin.com/neT2dTKUNKA/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- 牛腩粉 -->
-        <article class="card reveal"
-                 data-title="牛腩粉"
-                 data-desc="米粉细白柔滑，牛腩慢火焖至软烂入味，浇一勺牛骨老汤，佐酸豆角与萝卜干。玉林人的一天，常从这一碗鲜香开始。"
-                 data-images="images/牛腩粉/image_在玉林吃粉要吃牛腩粉🤔_要提及..._0.jpg|images/牛腩粉/image_在玉林吃粉要吃牛腩粉🤔_要提及..._1.jpg|images/牛腩粉/image_——_又回到我大玉林嗦碗牛腩粉_..._0.jpg">
-          <div class="card-media">
-            <img src="images/牛腩粉/image_在玉林吃粉要吃牛腩粉🤔_要提及..._0.jpg" alt="浇满牛腩与卤汁的玉林牛腩粉" loading="lazy" decoding="async">
-            <span class="zoom-tip">点击看大图</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">牛腩粉 <small>BRISKET RICE NOODLE</small></h3>
-            <p class="card-text">一碗牛腩粉，记住一座城。牛骨老汤打底，牛腩软烂，嗦粉的声音就是清晨的开场白。</p>
-            <div class="card-foot">
-              <div class="tags"><span>日常早餐</span><span>汤粉</span></div>
-              <a class="src-link" href="https://v.douyin.com/qm5jIbzY8Mo/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- 福绵鸭 -->
-        <article class="card reveal"
-                 data-title="福绵鸭"
-                 data-desc="源于玉林福绵区的白切鸭做法。清水浸熟后斩件，佐以秘制生抽、酸梅酱与姜葱蓉，皮爽肉嫩、清鲜不腻，堪称玉林美食名片。"
-                 data-images="images/福绵鸭/image_打卡开了30年的老字号福绵鸭餐馆..._1.jpg|images/福绵鸭/image_打卡开了30年的老字号福绵鸭餐馆..._0.jpg|images/福绵鸭/image_打卡开了30年的老字号福绵鸭餐馆..._2.jpg">
-          <div class="card-media">
-            <img src="images/福绵鸭/image_打卡开了30年的老字号福绵鸭餐馆..._1.jpg" alt="白切福绵鸭与蘸料" loading="lazy" decoding="async">
-            <span class="zoom-tip">点击看大图</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">福绵鸭 <small>FUMIAN DUCK</small></h3>
-            <p class="card-text">白切上桌，佐酸梅与姜葱蓉。皮爽肉嫩，裹着最浓的市井烟火，是老字号里三十年的味道。</p>
-            <div class="card-foot">
-              <div class="tags"><span>白切名菜</span><span>美食名片</span></div>
-              <a class="src-link" href="https://v.douyin.com/lck3PCItN-Y/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================== 四、民俗非遗 ============================== -->
-  <section class="section alt" id="folk">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <p class="sec-kicker">INTANGIBLE HERITAGE · 民俗非遗</p>
-        <h2 class="sec-title">乡音未改，<b>古艺犹新</b></h2>
-        <div class="sec-divider" aria-hidden="true"><i></i><span></span><i></i></div>
-        <p class="sec-desc">唢呐一响，八音穿云；茶山起调，采茶入戏；山歌一句，木偶一台——这些都是玉林人世代相传的生活底色。</p>
-      </div>
-
-      <div class="grid grid-4">
-        <!-- 玉林八音 -->
-        <article class="card reveal"
-                 data-title="玉林八音"
-                 data-desc="广西颇有影响力的民间吹打乐，以鼓、锣、钹、唢呐、笛、箫、弦等八类乐器合奏，曲目丰富、气势热烈，婚丧节庆皆不可少。"
-                 data-images="images/八音/image_%23上热门%20，玉林非物质文化遗产八..._5.jpg|images/八音/image_%23上热门%20，玉林非物质文化遗产八..._0.jpg|images/八音/image_%23上热门%20，玉林非物质文化遗产八..._3.jpg">
-          <div class="card-media">
-            <img src="images/八音/image_%23上热门%20，玉林非物质文化遗产八..._5.jpg" alt="玉林八音民间乐班演奏" loading="lazy" decoding="async">
-            <span class="zoom-tip">点击看大图</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">玉林八音 <small>YULIN BAYIN</small></h3>
-            <p class="card-text">鼓锣唢呐一齐开场，八音合奏穿街过巷。无论红白喜事，那一声高亢就是玉林人的热闹。</p>
-            <div class="card-foot">
-              <div class="tags"><span>民间吹打乐</span><span>节庆礼俗</span></div>
-              <a class="src-link" href="https://v.douyin.com/ANZ27YuTKTY/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- 桂南采茶戏 -->
-        <article class="card reveal"
-                 data-title="桂南采茶戏"
-                 data-desc="由采茶歌舞发展而来的地方小戏，唱腔质朴明快、舞步轻盈活泼，载歌载舞演尽农事劳作与人间悲欢，盛行于桂南客家地区。"
-                 data-images="images/桂南采茶戏/68773df5aeb83604ffdded72cc70f412.png|images/桂南采茶戏/5da4fcbea55f4e29f234c982e6a9d611.png">
-          <div class="card-media">
-            <img src="images/桂南采茶戏/68773df5aeb83604ffdded72cc70f412.png" alt="桂南采茶戏舞台演出" loading="lazy" decoding="async">
-            <span class="zoom-tip">点击看大图</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">桂南采茶戏 <small>TEA-PICKING OPERA</small></h3>
-            <p class="card-text">从茶山小调唱成一台大戏，扇子一转、矮步一挪，喜怒哀乐都在山野之间。</p>
-            <div class="card-foot">
-              <div class="tags"><span>地方戏曲</span><span>载歌载舞</span></div>
-              <a class="src-link" href="https://v.douyin.com/_YShk_xRxvM/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- 客家山歌 -->
-        <article class="card reveal"
-                 data-title="客家山歌"
-                 data-desc="流传于博白等客家聚居区，随口成韵、即景生情，善用比兴双关。田埂山上你唱我和，唱的是劳作、情爱与山野的自在。"
-                 data-images="images/客家山歌/69fdc3453faebab698a63302fda52bb7.png|images/客家山歌/f8edebeae1ad65a950caab29e8bbc927.png">
-          <div class="card-media">
-            <img src="images/客家山歌/69fdc3453faebab698a63302fda52bb7.png" alt="客家山歌对唱场景" loading="lazy" decoding="async">
-            <span class="zoom-tip">点击看大图</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">客家山歌 <small>HAKKA FOLK SONG</small></h3>
-            <p class="card-text">三月三歌圩起调，一句比兴一句双关。山野为台、清风为伴，客家人的心事全在歌里。</p>
-            <div class="card-foot">
-              <div class="tags"><span>客家歌谣</span><span>三月三</span></div>
-              <a class="src-link" href="https://v.douyin.com/OTaK-ZQKKiI/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- 玉林木偶戏 -->
-        <article class="card reveal"
-                 data-title="玉林木偶戏"
-                 data-desc="提线之下，木偶唱念做打俱佳。艺人十指腾挪，锣鼓与唱腔相和，是玉林乡间庙会、节庆最受欢迎的古老戏班。"
-                 data-images="images/玉林木偶戏/image_🎭乡村偶遇木偶戏，久违的童年又..._0.jpg|images/玉林木偶戏/image_🎭乡村偶遇木偶戏，久违的童年又..._2.jpg|images/玉林木偶戏/image_🎭乡村偶遇木偶戏，久违的童年又..._1.jpg">
-          <div class="card-media">
-            <img src="images/玉林木偶戏/image_🎭乡村偶遇木偶戏，久违的童年又..._0.jpg" alt="乡间演出的玉林木偶戏" loading="lazy" decoding="async">
-            <span class="zoom-tip">点击看大图</span>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">玉林木偶戏 <small>PUPPET SHOW</small></h3>
-            <p class="card-text">十指提线，牵起千年的悲欢离合。锣鼓一响，乡间的童年记忆便回到眼前。</p>
-            <div class="card-foot">
-              <div class="tags"><span>木偶戏</span><span>庙会社戏</span></div>
-              <a class="src-link" href="https://v.douyin.com/b_32V5vmQDI/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================== 五、视频展映 ============================== -->
-  <section class="section" id="media">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <p class="sec-kicker">VIDEO GALLERY · 视频展映</p>
-        <h2 class="sec-title">光影玉林，<b>动起来的家乡</b></h2>
-        <div class="sec-divider" aria-hidden="true"><i></i><span></span><i></i></div>
-        <p class="sec-desc">从山水到市井、从技艺到舞台，15 段影像带你看见会呼吸的玉林。点击任意封面即可播放。</p>
-      </div>
-
-      <div class="video-grid">
-        <!-- 大容山 -->
-        <figure class="video-card reveal">
-          <div class="video-wrap">
-            <video src="videos/大容山/video_今天来玉林大容山~露营，真是个好..._0_1.mp4"
-                   poster="images/大容山/image_夏天不去一趟大容山怎么行🤔。大..._5.jpg"
-                   preload="none" playsinline controls></video>
-            <button class="play-btn" type="button" aria-label="播放视频：云端草甸上的露营时光"><span>▶</span></button>
-          </div>
-          <figcaption class="video-body">
-            <h3>云端草甸 · 露营大容山</h3>
             <p>风车、草甸与日出云海，帐篷就搭在千米山脊之上。</p>
-            <a class="src-link" href="https://v.douyin.com/UGxauupCKGM/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-          </figcaption>
-        </figure>
-
-        <!-- 都峤山 -->
-        <figure class="video-card reveal">
-          <div class="video-wrap">
-            <video src="videos/都峤山/video_来容县带你欣赏都峤山仙境云海风光..._0_1.mp4"
-                   poster="images/都峤山/image_藏在广西的“人间仙境”！丹霞赤壁..._12.jpg"
-                   preload="none" playsinline controls></video>
-            <button class="play-btn" type="button" aria-label="播放视频：都峤山仙境云海"><span>▶</span></button>
+            <div class="theme-card-more"><span>观看视频</span><span aria-hidden="true">→</span></div>
           </div>
-          <figcaption class="video-body">
-            <h3>仙境云海 · 都峤山</h3>
-            <p>丹霞赤壁在云雾里起落，一步风景，一步传说。</p>
-            <a class="src-link" href="https://v.douyin.com/XEjjGRvowjA/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-          </figcaption>
-        </figure>
+        </a>
 
-        <!-- 五彩田园 -->
-        <figure class="video-card reveal">
-          <div class="video-wrap">
-            <video src="videos/五彩田园/五彩田园.mp4"
-                   poster="images/五彩田园/image_水街黄昏。玉林五彩田园风景区——..._0.jpg"
-                   preload="none" playsinline controls></video>
-            <button class="play-btn" type="button" aria-label="播放视频：五彩田园水街黄昏"><span>▶</span></button>
+        <a class="theme-card reveal" href="culture.html#video">
+          <div class="theme-card-media">
+            <span class="tagline">VIDEO</span>
+            <img src="assets/img/posters/客家围屋/poster.jpg" alt="客家围屋视频封面" width="960" height="540" loading="lazy" decoding="async">
           </div>
-          <figcaption class="video-body">
-            <h3>水街黄昏 · 五彩田园</h3>
-            <p>夕阳落在稻田与水街之间，田园的颜色一层叠一层。</p>
-            <a class="src-link" href="https://v.douyin.com/965Pdrl10FY/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-          </figcaption>
-        </figure>
+          <div class="theme-card-body">
+            <div>
+              <h3>百年围堡 · 客家围屋</h3>
+              <small>HERITAGE</small>
+            </div>
+            <p>两百余年风雨，一座围屋围住的是一个家族的记忆。</p>
+            <div class="theme-card-more"><span>观看视频</span><span aria-hidden="true">→</span></div>
+          </div>
+        </a>
 
-        <!-- 云天文化城 -->
-        <figure class="video-card reveal">
-          <div class="video-wrap">
-            <video src="videos/云天文化城/video_%23玉林%20云天宫最神秘的地方你们知..._top_0_1.mp4"
-                   poster="images/云天文化城/image_【云天宫】不知天上宫阙，今夕是何..._3.jpg"
-                   preload="none" playsinline controls></video>
-            <button class="play-btn" type="button" aria-label="播放视频：云天宫最神秘的地方"><span>▶</span></button>
+        <a class="theme-card reveal" href="food.html#video">
+          <div class="theme-card-media">
+            <span class="tagline">VIDEO</span>
+            <img src="assets/img/posters/福绵鸭/poster.jpg" alt="福绵鸭视频封面" width="960" height="540" loading="lazy" decoding="async">
           </div>
-          <figcaption class="video-body">
-            <h3>天上宫阙 · 云天宫</h3>
-            <p>走进这座宫殿群，看雕刻与飞檐如何堆出一座城。</p>
-            <a class="src-link" href="https://v.douyin.com/rLKQ4XEEldM/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-          </figcaption>
-        </figure>
-
-        <!-- 真武阁 -->
-        <figure class="video-card reveal">
-          <div class="video-wrap">
-            <video src="videos/真武阁/video_广西容县容州古城%20_%20经略台真武..._top_0_1.mp4"
-                   poster="images/真武阁/image_玉林容县真武阁%20四柱悬空%20千载独..._13.jpg"
-                   preload="none" playsinline controls></video>
-            <button class="play-btn" type="button" aria-label="播放视频：经略台真武阁"><span>▶</span></button>
-          </div>
-          <figcaption class="video-body">
-            <h3>四柱悬空 · 真武阁</h3>
-            <p>看这座明代木构如何以杠杆之力悬柱千年。</p>
-            <a class="src-link" href="https://v.douyin.com/QRXuP50OrpE/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-          </figcaption>
-        </figure>
-
-        <!-- 容州古城 -->
-        <figure class="video-card reveal">
-          <div class="video-wrap">
-            <video src="videos/容州古城/video_据说这里是杨贵妃的故乡，这座容州..._0_0.mp4"
-                   poster="images/容州古城/image_广西名胜玉林容州古城。%23我的抖音..._13.jpg"
-                   preload="none" playsinline controls></video>
-            <button class="play-btn" type="button" aria-label="播放视频：容州古城"><span>▶</span></button>
-          </div>
-          <figcaption class="video-body">
-            <h3>唐风夜色 · 容州古城</h3>
-            <p>贵妃故里的传说，藏在古城的每一盏灯笼里。</p>
-            <a class="src-link" href="https://v.douyin.com/4uToIEbN_6U/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-          </figcaption>
-        </figure>
-
-        <!-- 客家围屋 -->
-        <figure class="video-card reveal">
-          <div class="video-wrap">
-            <video src="videos/客家围屋/video_玉林市有座200多年的巨型客家围..._top_0_0.mp4"
-                   poster="images/客家围屋/image_珠砂垌客家围屋。位于玉林市郊，典..._4.jpg"
-                   preload="none" playsinline controls></video>
-            <button class="play-btn" type="button" aria-label="播放视频：200多年历史的客家围屋"><span>▶</span></button>
-          </div>
-          <figcaption class="video-body">
-            <h3>百年围堡 · 客家围屋</h3>
-            <p>两百余年风雨，一座围屋围住的是一个家族。</p>
-            <a class="src-link" href="https://v.douyin.com/ZmzEB37P-wI/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-          </figcaption>
-        </figure>
-
-        <!-- 玉林牛巴 -->
-        <figure class="video-card reveal">
-          <div class="video-wrap">
-            <video src="videos/玉林牛巴/video_广西·玉林牛巴%20%23抗拒不了的美食..._top_0_2.mp4"
-                   poster="images/玉林牛巴/image_玉林牛巴%20广西特产零食。吃过很多..._2.jpg"
-                   preload="none" playsinline controls></video>
-            <button class="play-btn" type="button" aria-label="播放视频：玉林牛巴"><span>▶</span></button>
-          </div>
-          <figcaption class="video-body">
-            <h3>甘韧咸香 · 玉林牛巴</h3>
-            <p>一道牛巴从选肉到入味，要经过多少耐心。</p>
-            <a class="src-link" href="https://v.douyin.com/kp5RqLrjoj8/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-          </figcaption>
-        </figure>
-
-        <!-- 牛腩粉 -->
-        <figure class="video-card reveal">
-          <div class="video-wrap">
-            <video src="videos/牛腩粉/video_一碗牛腩粉，记住一座城；玉林人的..._top_0_0.mp4"
-                   poster="images/牛腩粉/image_在玉林吃粉要吃牛腩粉🤔_要提及..._0.jpg"
-                   preload="none" playsinline controls></video>
-            <button class="play-btn" type="button" aria-label="播放视频：一碗牛腩粉，记住一座城"><span>▶</span></button>
-          </div>
-          <figcaption class="video-body">
-            <h3>一碗乡愁 · 牛腩粉</h3>
-            <p>记住一座城的方式，常常是从一碗粉开始的。</p>
-            <a class="src-link" href="https://v.douyin.com/Qy0x3wLJGQk/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-          </figcaption>
-        </figure>
-
-        <!-- 玉林白散 -->
-        <figure class="video-card reveal">
-          <div class="video-wrap">
-            <video src="videos/玉林白散/video_白糤是玉林人过年独有的“符号”，..._top_0_2.mp4"
-                   poster="images/玉林白散/image_广西玉林土特产~白散（米花）广西..._5.jpg"
-                   preload="none" playsinline controls></video>
-            <button class="play-btn" type="button" aria-label="播放视频：白糤，玉林人过年的符号"><span>▶</span></button>
-          </div>
-          <figcaption class="video-body">
-            <h3>年的符号 · 玉林白糤</h3>
-            <p>压模、晾晒、入油锅，一朵米花炸开整个新年。</p>
-            <a class="src-link" href="https://v.douyin.com/3ed1xKkwOqg/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-          </figcaption>
-        </figure>
-
-        <!-- 福绵鸭 -->
-        <figure class="video-card reveal">
-          <div class="video-wrap">
-            <video src="videos/福绵鸭/video_玉林美食名片福绵鸭，裹着最浓的烟..._top_0_1.mp4"
-                   poster="images/福绵鸭/image_打卡开了30年的老字号福绵鸭餐馆..._1.jpg"
-                   preload="none" playsinline controls></video>
-            <button class="play-btn" type="button" aria-label="播放视频：玉林美食名片福绵鸭"><span>▶</span></button>
-          </div>
-          <figcaption class="video-body">
-            <h3>城市名片 · 福绵鸭</h3>
+          <div class="theme-card-body">
+            <div>
+              <h3>城市名片 · 福绵鸭</h3>
+              <small>CUISINE</small>
+            </div>
             <p>一只白切鸭，蘸的是酱，品的是三十年烟火。</p>
-            <a class="src-link" href="https://v.douyin.com/juvAnXawW_g/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-          </figcaption>
-        </figure>
-
-        <!-- 玉林八音 -->
-        <figure class="video-card reveal">
-          <div class="video-wrap">
-            <video src="videos/八音/SaveTik.io_7114486956767120676.mp4"
-                   poster="images/八音/image_%23上热门%20，玉林非物质文化遗产八..._5.jpg"
-                   preload="none" playsinline controls></video>
-            <button class="play-btn" type="button" aria-label="播放视频：玉林八音"><span>▶</span></button>
+            <div class="theme-card-more"><span>观看视频</span><span aria-hidden="true">→</span></div>
           </div>
-          <figcaption class="video-body">
-            <h3>八音合鸣 · 玉林乡音</h3>
+        </a>
+
+        <a class="theme-card reveal" href="folk.html#video">
+          <div class="theme-card-media">
+            <span class="tagline">VIDEO</span>
+            <img src="assets/img/posters/八音/poster.jpg" alt="玉林八音视频封面" width="960" height="540" loading="lazy" decoding="async">
+          </div>
+          <div class="theme-card-body">
+            <div>
+              <h3>八音合鸣 · 玉林乡音</h3>
+              <small>FOLK ART</small>
+            </div>
             <p>唢呐一出声，整条街都跟着热闹起来。</p>
-            <a class="src-link" href="https://v.douyin.com/fQB8aFXVew4/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-          </figcaption>
-        </figure>
-
-        <!-- 桂南采茶戏 -->
-        <figure class="video-card reveal">
-          <div class="video-wrap">
-            <video src="videos/桂南采茶戏/video_“美在玉林”短视频作品展播之《桂..._top_0_1.mp4"
-                   poster="images/桂南采茶戏/68773df5aeb83604ffdded72cc70f412.png"
-                   preload="none" playsinline controls></video>
-            <button class="play-btn" type="button" aria-label="播放视频：桂南采茶戏"><span>▶</span></button>
+            <div class="theme-card-more"><span>观看视频</span><span aria-hidden="true">→</span></div>
           </div>
-          <figcaption class="video-body">
-            <h3>茶山有戏 · 桂南采茶戏</h3>
-            <p>扇花翻飞，矮步生风，一台小戏唱尽人间喜乐。</p>
-            <a class="src-link" href="https://v.douyin.com/_YShk_xRxvM/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-          </figcaption>
-        </figure>
-
-        <!-- 客家山歌 -->
-        <figure class="video-card reveal">
-          <div class="video-wrap">
-            <video src="videos/客家山歌/video_博白原创客家山歌%20在三月三幸福开..._top_0_0.mp4"
-                   poster="images/客家山歌/69fdc3453faebab698a63302fda52bb7.png"
-                   preload="none" playsinline controls></video>
-            <button class="play-btn" type="button" aria-label="播放视频：客家山歌"><span>▶</span></button>
-          </div>
-          <figcaption class="video-body">
-            <h3>三月三 · 客家山歌</h3>
-            <p>原创山歌起调，唱的是客家日子里长出的人间欢喜。</p>
-            <a class="src-link" href="https://v.douyin.com/OTaK-ZQKKiI/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-          </figcaption>
-        </figure>
-
-        <!-- 玉林木偶戏 -->
-        <figure class="video-card reveal">
-          <div class="video-wrap">
-            <video src="videos/玉林木偶戏/video_“美在玉林”短视频作品展播之《%20..._top_0_1.mp4"
-                   poster="images/玉林木偶戏/image_🎭乡村偶遇木偶戏，久违的童年又..._0.jpg"
-                   preload="none" playsinline controls></video>
-            <button class="play-btn" type="button" aria-label="播放视频：玉林木偶戏"><span>▶</span></button>
-          </div>
-          <figcaption class="video-body">
-            <h3>指上春秋 · 玉林木偶戏</h3>
-            <p>提线之间，木偶也有了悲喜表情。</p>
-            <a class="src-link" href="https://v.douyin.com/hQR5QPqquMw/" target="_blank" rel="noopener">素材来源：抖音 ↗</a>
-          </figcaption>
-        </figure>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- ============================== 六、关于玉林 ============================== -->
-  <section class="section" id="about">
+  <!-- ==================== 尾部引导 ==================== -->
+  <section class="section section-alt">
     <div class="wrap">
       <div class="sec-head reveal">
-        <p class="sec-kicker">ABOUT YULIN · 关于玉林</p>
+        <p class="sec-kicker">About · 关于</p>
         <h2 class="sec-title">岭南美玉，<b>我的家乡</b></h2>
         <div class="sec-divider" aria-hidden="true"><i></i><span></span><i></i></div>
+        <p class="sec-desc">想了解这座城的沿革、人口与侨乡数据，以及全部素材来源，请移步「关于玉林」。</p>
       </div>
-
-      <div class="about-layout">
-        <div class="about-text reveal">
-          <p>玉林，地处广西东南部，古称郁林。西汉元鼎六年（公元前111年）设郁林郡，至今已有两千一百余年的州郡历史，世称“千年古州、岭南都会”。</p>
-          <p>全市总面积约1.28万平方公里，辖玉州区、福绵区、北流市、容县、陆川县、博白县、兴业县等县（市、区）及玉东新区。这里是广西第二人口大市，也是广西最大、全国著名的侨乡——220多万海外华侨及港澳台同胞的根，在这片丘陵与盆地之间。</p>
-          <p>大容山层峦叠翠，都峤山丹霞赤壁映日，真武阁以四柱悬空写下中国木构建筑的传奇；而真正让人念想的，往往还是清晨那碗热气腾腾的牛腩粉，和年关炸开的白散香。山水养人，烟火留客——这便是我生长的玉林。</p>
-          <p style="color:var(--muted);font-size:13px">数据出处：玉林市人民政府门户网站《玉林市概况》《玉林旅游导图》；人口数据引自百科词条所载统计公报，详见下方来源说明。</p>
-        </div>
-
-        <div class="stats reveal">
-          <div class="stat"><b>2100<i>+ 年</i></b><strong>州郡建置历史</strong><em>西汉元鼎六年（公元前111年）置郁林郡</em></div>
-          <div class="stat"><b>580.42<i>万人</i></b><strong>常住人口</strong><em>2024年末数据；户籍人口约742万</em></div>
-          <div class="stat"><b>44<i>家</i></b><strong>国家 A 级旅游景区</strong><em>其中 4A 级景区 16 家（截至2024年7月）</em></div>
-          <div class="stat"><b>220<i>万+</i></b><strong>海外华侨及港澳台同胞</strong><em>广西第一侨乡，全国著名侨乡</em></div>
-        </div>
+      <div class="pager reveal">
+        <a href="about.html">
+          <small>NEXT PAGE</small>
+          <strong>关于玉林 →</strong>
+        </a>
       </div>
-
-      <!-- 素材来源 -->
-      <details class="sources reveal">
-        <summary>素材来源与数据出处（点击展开）</summary>
-        <ul>
-          <li>大容山 —— 图片 <a href="https://v.douyin.com/3YPUq7xlpsA/" target="_blank" rel="noopener">来源</a>｜视频 <a href="https://v.douyin.com/UGxauupCKGM/" target="_blank" rel="noopener">来源</a></li>
-          <li>都峤山 —— 图片 <a href="https://v.douyin.com/fMrpQuWSE94/" target="_blank" rel="noopener">来源</a>｜视频 <a href="https://v.douyin.com/XEjjGRvowjA/" target="_blank" rel="noopener">来源</a></li>
-          <li>五彩田园 —— 图片 <a href="https://v.douyin.com/7SADv9L0hDQ/" target="_blank" rel="noopener">来源一</a>、<a href="https://v.douyin.com/dZ1dAxAmpXE/" target="_blank" rel="noopener">来源二</a>｜视频 <a href="https://v.douyin.com/965Pdrl10FY/" target="_blank" rel="noopener">来源</a></li>
-          <li>云天文化城 —— 图片 <a href="https://v.douyin.com/Hn6-Z_jtMvI/" target="_blank" rel="noopener">来源</a>｜视频 <a href="https://v.douyin.com/rLKQ4XEEldM/" target="_blank" rel="noopener">来源</a></li>
-          <li>真武阁 —— 图片 <a href="https://v.douyin.com/7GkKJ3GbTnc/" target="_blank" rel="noopener">来源</a>｜视频 <a href="https://v.douyin.com/QRXuP50OrpE/" target="_blank" rel="noopener">来源</a></li>
-          <li>容州古城 —— 图片 <a href="https://v.douyin.com/Sz82HFeQaGE/" target="_blank" rel="noopener">来源</a>｜视频 <a href="https://v.douyin.com/4uToIEbN_6U/" target="_blank" rel="noopener">来源</a></li>
-          <li>客家围屋 —— 图片 <a href="https://v.douyin.com/CV21WQJUL6o/" target="_blank" rel="noopener">来源</a>｜视频 <a href="https://v.douyin.com/ZmzEB37P-wI/" target="_blank" rel="noopener">来源</a></li>
-          <li>玉林牛巴 —— 图片 <a href="https://v.douyin.com/6QT5-VgBDtg/" target="_blank" rel="noopener">来源</a>｜视频 <a href="https://v.douyin.com/kp5RqLrjoj8/" target="_blank" rel="noopener">来源</a></li>
-          <li>牛腩粉 —— 图片 <a href="https://v.douyin.com/qm5jIbzY8Mo/" target="_blank" rel="noopener">来源一</a>、<a href="https://v.douyin.com/1zoo-OaxwOw/" target="_blank" rel="noopener">来源二</a>、<a href="https://v.douyin.com/xk7M1U4oWoc/" target="_blank" rel="noopener">来源三</a>｜视频 <a href="https://v.douyin.com/Qy0x3wLJGQk/" target="_blank" rel="noopener">来源</a></li>
-          <li>玉林白散 —— 图片 <a href="https://v.douyin.com/neT2dTKUNKA/" target="_blank" rel="noopener">来源</a>｜视频 <a href="https://v.douyin.com/3ed1xKkwOqg/" target="_blank" rel="noopener">来源</a></li>
-          <li>福绵鸭 —— 图片 <a href="https://v.douyin.com/lck3PCItN-Y/" target="_blank" rel="noopener">来源</a>｜视频 <a href="https://v.douyin.com/juvAnXawW_g/" target="_blank" rel="noopener">来源</a></li>
-          <li>玉林八音 —— 图片 <a href="https://v.douyin.com/ANZ27YuTKTY/" target="_blank" rel="noopener">来源</a>｜视频 <a href="https://v.douyin.com/fQB8aFXVew4/" target="_blank" rel="noopener">来源</a></li>
-          <li>玉林木偶戏 —— 图片 <a href="https://v.douyin.com/b_32V5vmQDI/" target="_blank" rel="noopener">来源</a>｜视频 <a href="https://v.douyin.com/hQR5QPqquMw/" target="_blank" rel="noopener">来源</a></li>
-          <li>桂南采茶戏 —— 视频 <a href="https://v.douyin.com/_YShk_xRxvM/" target="_blank" rel="noopener">来源</a></li>
-          <li>客家山歌 —— 视频 <a href="https://v.douyin.com/OTaK-ZQKKiI/" target="_blank" rel="noopener">来源</a></li>
-        </ul>
-        <p class="note">
-          完整溯源清单另见本站 <code>资料/图像溯源.docx</code>。所有图片与视频素材均采集自抖音公开短视频，版权归原作者所有，本页仅用于《人工智能导论》课程实践展示，不作商业用途。
-          城市数据参考：玉林市人民政府门户网站
-          <a href="http://www.yulin.gov.cn/zwgk/zjyl/ylgk/t997131.shtml" target="_blank" rel="noopener">《玉林市概况》</a>、
-          <a href="http://www.yulin.gov.cn/bmlqfw/jsms/yk/lydt/t18738068.shtml" target="_blank" rel="noopener">《玉林旅游导图》</a>。
-        </p>
-      </details>
     </div>
   </section>
 
 </main>
 
-<!-- ============================== 页脚 ============================== -->
+<!-- ==================== 页脚 ==================== -->
 <footer class="footer">
   <div class="wrap">
     <div>
       <p class="f-brand">魅力玉林 · 山水玉林 岭南美玉</p>
       <small>© 2026 我的家乡——广西玉林文旅主题网站 ｜ 《人工智能导论》课程实践作品</small>
-      <small>图片与视频素材版权归原作者所有，来源详见网页内“素材来源与数据出处”。</small>
+      <small>图片与视频素材版权归原作者所有，来源详见「关于玉林」与 资料/图像溯源.docx。</small>
     </div>
     <nav class="footer-links" aria-label="页脚导航">
-      <a href="#nature">山水自然</a>
-      <a href="#culture">人文古迹</a>
-      <a href="#food">特色美食</a>
-      <a href="#folk">民俗非遗</a>
-      <a href="#about">关于玉林</a>
+      <a href="index.html">首页</a>
+      <a href="nature.html">山水自然</a>
+      <a href="culture.html">人文古迹</a>
+      <a href="food.html">特色美食</a>
+      <a href="folk.html">民俗非遗</a>
+      <a href="about.html">关于玉林</a>
     </nav>
   </div>
 </footer>
 
-<!-- 返回顶部按钮 -->
 <button class="to-top" id="toTop" type="button" aria-label="返回页面顶部"></button>
 
-<!-- 图片灯箱 -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="图片大图查看">
-  <button class="lb-btn lb-close" id="lbClose" type="button" aria-label="关闭">✕</button>
-  <button class="lb-btn lb-prev" id="lbPrev" type="button" aria-label="上一张">‹</button>
-  <button class="lb-btn lb-next" id="lbNext" type="button" aria-label="下一张">›</button>
-  <figure class="lb-figure">
-    <img class="lb-img" id="lbImg" src="" alt="">
-    <figcaption class="lb-cap">
-      <h4 id="lbTitle"></h4>
-      <p id="lbDesc"></p>
-      <p class="lb-count" id="lbCount"></p>
-    </figcaption>
-  </figure>
-</div>
-
-<script>
-(function () {
-  'use strict';
-
-  /* ======================================================================
-     1. 通用工具
-     ====================================================================== */
-  function $(sel, ctx) { return (ctx || document).querySelector(sel); }
-  function $$(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
-  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ======================================================================
-     2. 顶栏：滚动收缩 + 汉堡菜单
-     ====================================================================== */
-  var topbar = $('#topbar');
-  var nav = $('#nav');
-  var navToggle = $('#navToggle');
-
-  function setNav(open) {
-    nav.classList.toggle('open', open);
-    navToggle.classList.toggle('is-open', open);
-    navToggle.setAttribute('aria-expanded', String(open));
-    navToggle.setAttribute('aria-label', open ? '关闭导航菜单' : '打开导航菜单');
-  }
-  navToggle.addEventListener('click', function (e) {
-    e.stopPropagation();
-    setNav(!nav.classList.contains('open'));
-  });
-  // 点击导航项后关闭菜单
-  $$('.nav a').forEach(function (a) { a.addEventListener('click', function () { setNav(false); }); });
-  // 点击空白处关闭
-  document.addEventListener('click', function (e) {
-    if (nav.classList.contains('open') && !nav.contains(e.target) && !navToggle.contains(e.target)) setNav(false);
-  });
-  // 视窗放大回桌面尺寸时复位
-  window.addEventListener('resize', function () { if (window.innerWidth > 900) setNav(false); });
-
-  /* ======================================================================
-     3. 导航平滑滚动（带顶栏偏移）
-     ====================================================================== */
-  function scrollToTopPos(top) {
-    try {
-      window.scrollTo({ top: top, behavior: reduceMotion ? 'auto' : 'smooth' });
-    } catch (err) {
-      window.scrollTo(0, top); // 兜底：老浏览器不支持对象参数
-    }
-  }
-  $$('a[href^="#"]').forEach(function (link) {
-    link.addEventListener('click', function (e) {
-      var id = link.getAttribute('href');
-      if (!id || id === '#') return;
-      var target = document.querySelector(id);
-      if (!target) return;
-      e.preventDefault();
-      scrollToTopPos(target.getBoundingClientRect().top + window.pageYOffset - topbar.offsetHeight);
-      if (history.replaceState) history.replaceState(null, '', id); // 同步地址栏锚点
-    });
-  });
-
-  /* ======================================================================
-     4. 当前区块高亮（IntersectionObserver）
-     ====================================================================== */
-  var navLinks = $$('.nav a[href^="#"]');
-  var sections = $$('main section[id]');
-
-  function setActive(id) {
-    navLinks.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + id); });
-  }
-  if ('IntersectionObserver' in window) {
-    var activeId = null;
-    var navObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        // 视口中线附近所在的区块即当前区块
-        if (entry.isIntersecting) activeId = entry.target.id;
-      });
-      if (activeId) setActive(activeId);
-    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
-    sections.forEach(function (s) { navObserver.observe(s); });
-  }
-
-  /* ======================================================================
-     5. 滚动渐现
-     ====================================================================== */
-  if ('IntersectionObserver' in window) {
-    var revealObserver = new IntersectionObserver(function (entries, obs) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        var el = entry.target;
-        // 同一父容器内的卡片错峰入场
-        var sibs = Array.prototype.filter.call(el.parentElement.children, function (c) {
-          return c.classList.contains('reveal');
-        });
-        el.style.transitionDelay = Math.min(Math.max(sibs.indexOf(el), 0), 5) * 90 + 'ms';
-        el.classList.add('in');
-        obs.unobserve(el);
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
-    $$('.reveal').forEach(function (el) { revealObserver.observe(el); });
-  } else {
-    $$('.reveal').forEach(function (el) { el.classList.add('in'); }); // 不支持时直接显示
-  }
-
-  /* ======================================================================
-     6. 返回顶部 + 顶栏状态（rAF 节流）
-     ====================================================================== */
-  var toTop = $('#toTop');
-  var ticking = false;
-  function onScroll() {
-    var y = window.pageYOffset || document.documentElement.scrollTop;
-    topbar.classList.toggle('scrolled', y > 20);
-    toTop.classList.toggle('show', y > window.innerHeight * 0.7);
-    ticking = false;
-  }
-  window.addEventListener('scroll', function () {
-    if (!ticking) { ticking = true; window.requestAnimationFrame(onScroll); }
-  }, { passive: true });
-  onScroll();
-  toTop.addEventListener('click', function () { scrollToTopPos(0); });
-
-  /* ======================================================================
-     7. 图片灯箱（按卡片分组，支持按钮/键盘/手势）
-     ====================================================================== */
-  var lightbox = $('#lightbox');
-  var lbImg = $('#lbImg');
-  var lbTitle = $('#lbTitle');
-  var lbDesc = $('#lbDesc');
-  var lbCount = $('#lbCount');
-  var galleries = [];   // 每张卡片一组：[{src,title,desc}, ...]
-  var curGroup = 0, curIndex = 0;
-
-  $$('[data-images]').forEach(function (card) {
-    var group = card.dataset.images.split('|').filter(Boolean).map(function (src) {
-      return { src: src.trim(), title: card.dataset.title || '', desc: card.dataset.desc || '' };
-    });
-    if (!group.length) return;
-    var gid = galleries.length;
-    galleries.push(group);
-    var media = $('.card-media', card);
-    if (media) media.addEventListener('click', function () { openLightbox(gid, 0); });
-  });
-
-  function render() {
-    var item = galleries[curGroup][curIndex];
-    lbImg.src = item.src;
-    lbImg.alt = item.title ? item.title + '（大图）' : '玉林风光大图';
-    lbTitle.textContent = item.title;
-    lbDesc.textContent = item.desc;
-    lbCount.textContent = (curIndex + 1) + ' / ' + galleries[curGroup].length;
-  }
-  function openLightbox(gid, index) {
-    if (!galleries.length) return;
-    curGroup = gid; curIndex = index;
-    render();
-    lightbox.classList.add('open');
-    document.body.style.overflow = 'hidden'; // 锁背景滚动
-  }
-  function closeLightbox() {
-    lightbox.classList.remove('open');
-    document.body.style.overflow = '';
-    lbImg.removeAttribute('src');
-  }
-  function step(delta) {
-    if (!galleries.length) return;
-    var len = galleries[curGroup].length;
-    curIndex = (curIndex + delta + len) % len;
-    render();
-  }
-  $('#lbClose').addEventListener('click', closeLightbox);
-  $('#lbPrev').addEventListener('click', function (e) { e.stopPropagation(); step(-1); });
-  $('#lbNext').addEventListener('click', function (e) { e.stopPropagation(); step(1); });
-  // 点击背景空白处关闭（点图片本身不关）
-  lightbox.addEventListener('click', function (e) {
-    if (e.target === lightbox || e.target.classList.contains('lb-figure')) closeLightbox();
-  });
-  // 键盘：Esc 关闭，左右切换
-  document.addEventListener('keydown', function (e) {
-    if (!lightbox.classList.contains('open')) return;
-    if (e.key === 'Escape') closeLightbox();
-    else if (e.key === 'ArrowLeft') step(-1);
-    else if (e.key === 'ArrowRight') step(1);
-  });
-  // 触摸左右滑动切换
-  var touchX = null;
-  lightbox.addEventListener('touchstart', function (e) { touchX = e.changedTouches[0].clientX; }, { passive: true });
-  lightbox.addEventListener('touchend', function (e) {
-    if (touchX === null) return;
-    var dx = e.changedTouches[0].clientX - touchX;
-    if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1);
-    touchX = null;
-  });
-
-  /* ======================================================================
-     8. 视频播放控制：封面点击播放，同时只播放一个视频
-     ====================================================================== */
-  var videos = $$('.video-wrap video');
-  function pauseOthers(current) {
-    videos.forEach(function (v) {
-      if (v !== current && !v.paused) v.pause();
-    });
-  }
-  $$('.video-wrap').forEach(function (wrap) {
-    var video = $('video', wrap);
-    var btn = $('.play-btn', wrap);
-    if (!video || !btn) return;
-
-    btn.addEventListener('click', function () {
-      pauseOthers(video);
-      var p = video.play();
-      if (p && p.catch) p.catch(function () { /* 忽略浏览器自动播放限制 */ });
-    });
-    video.addEventListener('play', function () { pauseOthers(video); wrap.classList.add('playing'); });
-    video.addEventListener('pause', function () { wrap.classList.remove('playing'); });
-    video.addEventListener('ended', function () { wrap.classList.remove('playing'); });
-
-    /* ---- 全屏播放：优先原生 Fullscreen API，失败则降级为“影院模式” ---- */
-    // 说明：若页面被嵌在没有 allowfullscreen 权限的 iframe（如 IDE 内置预览）中，
-    // requestFullscreen() 会被浏览器拒绝，此时用 fixed 覆盖层的影院模式兜底。
-    function fsEl() {
-      return document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement || null;
-    }
-    function enterNative() {
-      try {
-        var req = wrap.requestFullscreen || wrap.webkitRequestFullscreen || wrap.webkitRequestFullScreen || wrap.msRequestFullscreen;
-        if (!req) {
-          // iOS Safari 仅支持视频元素自身的全屏接口
-          if (typeof video.webkitEnterFullscreen === 'function') { video.webkitEnterFullscreen(); return Promise.resolve(); }
-          return Promise.reject();
-        }
-        var p = req.call(wrap);
-        return (p && p.then) ? p : Promise.resolve();
-      } catch (e) { return Promise.reject(e); }
-    }
-    function exitNative() {
-      var ex = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
-      if (ex) ex.call(document);
-    }
-    function enterCinema() {
-      wrap.classList.add('cinema');
-      document.body.classList.add('cinema-open');
-      fsBtn.textContent = '退出全屏';
-      var p = video.play();
-      if (p && p.catch) p.catch(function () { /* 忽略自动播放限制 */ });
-    }
-    function exitCinema() {
-      wrap.classList.remove('cinema');
-      document.body.classList.remove('cinema-open');
-      fsBtn.textContent = '全屏';
-    }
-    function toggleFullscreen() {
-      if (wrap.classList.contains('cinema')) { exitCinema(); return; }
-      if (fsEl() === wrap) { exitNative(); return; }
-      if (fsEl()) exitNative();
-      enterNative().then(function () {
-        fsBtn.textContent = '退出全屏';
-      }).catch(function () {
-        enterCinema(); // 原生全屏不可用时的兜底方案
-      });
-    }
-
-    // 动态插入全屏 / 退出按钮
-    var fsBtn = document.createElement('button');
-    fsBtn.type = 'button';
-    fsBtn.className = 'fs-btn';
-    fsBtn.textContent = '全屏';
-    fsBtn.setAttribute('aria-label', '全屏播放');
-    wrap.appendChild(fsBtn);
-    fsBtn.addEventListener('click', function (e) { e.stopPropagation(); toggleFullscreen(); });
-
-    var closeBtn = document.createElement('button');
-    closeBtn.type = 'button';
-    closeBtn.className = 'cinema-close';
-    closeBtn.textContent = '✕';
-    closeBtn.setAttribute('aria-label', '退出全屏播放');
-    wrap.appendChild(closeBtn);
-    closeBtn.addEventListener('click', function (e) { e.stopPropagation(); exitCinema(); });
-
-    // 同步原生全屏状态（用户按 Esc 或点击原生控件退出时）
-    ['fullscreenchange', 'webkitfullscreenchange', 'msfullscreenchange'].forEach(function (evt) {
-      document.addEventListener(evt, function () {
-        fsBtn.textContent = (fsEl() === wrap) ? '退出全屏' : '全屏';
-      });
-    });
-    // 影院模式下按 Esc 退出
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && wrap.classList.contains('cinema')) exitCinema();
-    });
-  });
-})();
-</script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>
